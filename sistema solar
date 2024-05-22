@@ -1,0 +1,52 @@
+let sunRadius = 27; 
+let planets = []; 
+
+function setup() {
+  createCanvas(700, 600);
+  
+  let sun = new Planet(width / 2, height / 2, sunRadius, 0, random(0.01, 0.05), color(255, 255, 0), "Sol");
+  planets.push(new Planet(135, 0.013, color(0, 100, 255), "Terra", 8, 150));
+  planets.push(new Planet(170, 0.010, color(255, 100, 100), "Marte", 6, 250));
+  planets.push(new Planet(220, 0.005, color(255, 255, 255), "Júpiter", 18, 350));
+  planets.push(new Planet(255, 0.003, color(255, 200, 100), "Saturno", 15, 415));
+  planets.push(new Planet(90, 0.015, color(100, 255, 100), "Vênus", 10, 550));
+}
+
+function draw() {
+  background(0);
+  
+  fill(255, 255, 0);
+  ellipse(width / 2, height / 2, sunRadius * 2, sunRadius * 2);
+  
+  for (let planet of planets) {
+    planet.update();
+    planet.display();
+  }
+}
+
+class Planet {
+  constructor(distance, speed, col, name, radius, initialAngle) {
+    this.distance = distance;
+    this.speed = speed;
+    this.col = col;
+    this.name = name;
+    this.radius = radius;
+    this.angle = initialAngle;
+  }
+  
+  update() {
+    this.angle += this.speed;
+  }
+  
+  display() {
+    let x = width / 2 + this.distance * cos(this.angle);
+    let y = height / 2 + this.distance * sin(this.angle);
+    
+    fill(this.col);
+    ellipse(x, y, this.radius * 2, this.radius * 2);
+        fill(250);
+    textAlign(CENTER, CENTER);
+    text(this.name, x, y + this.radius + 10);
+    
+  }
+}
